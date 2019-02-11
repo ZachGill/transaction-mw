@@ -8,7 +8,7 @@ import (
 
 const (
 	// Key is the name of the response header key where we write the problem ID
-	Key = "X-Problem-ID"
+	Key = "X-Transaction-ID"
 )
 
 type handler struct {
@@ -25,12 +25,12 @@ func NewHandler(next http.Handler) http.Handler {
 // ServeHTTP adds a header with a transaction ID before calling the next handler
 func (middleware *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var (
-		problemID string
+		transactionID string
 	)
 	if len(r.Header.Get(Key)) > 0 {
-		problemID = r.Header.Get(Key)
+		transactionID = r.Header.Get(Key)
 	} else {
-		problemID = xid.New().String()
+		transactionID = xid.New().String()
 	}
 
 	r.Header.Set(Key, problemID)
