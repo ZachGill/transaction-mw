@@ -33,7 +33,7 @@ func (middleware *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		transactionID = xid.New().String()
 	}
 
-	r.Header.Set(Key, problemID)
+	r.Header.Set(Key, transactionID)
 
 	middleware.NextHandler.ServeHTTP(w, r)
 }
